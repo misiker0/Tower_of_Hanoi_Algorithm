@@ -1,0 +1,26 @@
+def hanoi_solver(n):
+    
+    rods = [list(range(n, 0, -1)), [], []]
+    lines = []
+
+    def record_state():
+        state_str = f"{rods[0]} {rods[1]} {rods[2]}"
+        lines.append(state_str)
+
+    
+    record_state()
+
+    def move(k, src, dst, spare):
+        if k == 1:
+            disk = rods[src].pop()
+            rods[dst].append(disk)
+            record_state()
+        else:
+            move(k - 1, src, spare, dst)
+            move(1, src, dst, spare)
+            move(k - 1, spare, dst, src)
+
+    
+    move(n, src=0, dst=2, spare=1)
+
+    return "\n".join(lines)
